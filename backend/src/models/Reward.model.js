@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 
-const rewardHistorySchema = mongoose.Schema({
+const rewardSchema = mongoose.Schema({
         points: {
             type: Number,
             required: true,
-            default: 0
+            default: 100
         },
         givenBy: {
             type: mongoose.Schema.Types.ObjectId,
@@ -23,8 +23,6 @@ const rewardHistorySchema = mongoose.Schema({
 
 )
 
-rewardHistorySchema.plugin(mongooseAggregatePaginate)
+rewardSchema.plugin(mongooseAggregatePaginate)
 
-
-
-export const Reward = mongoose.model("Reward", rewardHistorySchema)
+export const Reward = mongoose.model("Reward", rewardSchema)

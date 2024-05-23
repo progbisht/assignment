@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { 
     getRewardBalance,
+    getRewardHistory
 } from '../controllers/reward.controller.js'
 
 
@@ -8,7 +9,8 @@ import {
 const router = Router()
 
 
-router.route('/balance').get(getRewardBalance)
+router.route('/balance/:id').get(getRewardBalance)
+router.route('/history/:id').get(getRewardHistory)
 
 
 export default router

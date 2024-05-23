@@ -50,7 +50,7 @@ const getCurrentUser = asyncHandler( async(req, res) => {
         throw new ApiError(400, `No user with ${id} exist`)
     }
 
-    const foundUser = await User.findOne({_id : id })
+    const foundUser = await User.findById(id)
 
     
 
@@ -62,10 +62,12 @@ const getCurrentUser = asyncHandler( async(req, res) => {
 
 const getAllUser = asyncHandler( async(req, res) => {
     
-    const foundUser = await User.find()
+    const foundUsers = await User.find()
+
+    
     res.status(200)
     .json(
-        new ApiResponse(200, foundUser, "Current user fetched successfully.")
+        new ApiResponse(200, foundUsers, "Current user fetched successfully.")
     )
 })
 
@@ -95,23 +97,6 @@ const updateUserDetails = asyncHandler( async(req, res) => {
 })
 
 
-const newReward = asyncHandler( async(req, res) => {
-    const { id } = req.params
-    const { fullName, points } = req.body
-
-    if(points > 100){
-        throw new ApiError(400, "Maximum points limit exceeded.")
-    }
-
-    const rewards = await Reward.findOne({ _id: id }).populate('reward').exec()
-
-    console.log(rewards);
-    
-    req.status(200)
-    .json(
-        new ApiResponse(200, user, "New reward created successfully.")
-    )
-})
 
 
 export { 

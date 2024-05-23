@@ -9,9 +9,10 @@ const Base = ({ eventType }) => {
   useEffect(() => {
     const fetch = async() => {
       try {       
-        const response = await axios.get('/api/v1/users/all')
+        const response_users = await axios.get('/api/v1/users/all')
+        setUsers(response_users.data.data)
+
         
-        setUsers(response.data.data)
       } catch (error) {
         console.log(error);
       }

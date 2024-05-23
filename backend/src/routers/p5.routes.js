@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import { 
     getP5Balance,
-    createP5Points,
+    getP5History,
+    createRewardPoints,
     deleteP5Points
 } from '../controllers/p5.controller.js'
 
@@ -10,10 +11,11 @@ import {
 const router = Router()
 
 
-router.route('/balance').get(getP5Balance)
-router.route('/create').post(createP5Points)
 router.route('/delete').get(deleteP5Points)
 
+router.route('/balance/:id').get(getP5Balance)
+router.route('/create/:id').post(createRewardPoints)
+router.route('/history/:id').get(getP5History)
 
 
 export default router

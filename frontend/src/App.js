@@ -3,7 +3,8 @@ import Base from "./Base";
 import NewUser from "./NewUser";
 import Users from "./Users";
 import Layout from "./Layout";
-
+import P5History from "./P5History";
+import RewardHistory from "./RewardHistory"
 
 function App() {
 
@@ -21,8 +22,8 @@ function App() {
             <NewUser />
           } />
           <Route path='/:id' element={<Users/> } />
-          <Route path='/:id/p5' element={<Users/> } />
-          <Route path='/:id/rewards' element={<Users/> } />
+          <Route path='/:id/p5' element={<P5History/> } />
+          <Route path='/:id/rewards' element={<RewardHistory/> } />
           <Route path='/:id/rewards/new' element={<Users/> } />
         
 

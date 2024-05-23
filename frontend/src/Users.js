@@ -28,10 +28,10 @@ const Users = () => {
           user={user}
         />
         <div className='formItem'>
-          <Link to={`/:id/p5`}>
+          <Link to={`/${id}/p5`}>
             <button>P5 balance</button>
           </Link>
-          <Link to={`/:id/p5`}> 
+          <Link to={`/${id}/rewards`}> 
             <button>Reward balance</button>
           </Link>
         </div>
