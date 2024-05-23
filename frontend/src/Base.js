@@ -6,12 +6,13 @@ const Base = ({ eventType }) => {
 
   const [ users, setUsers ] = useState([])
 
+
+
   useEffect(() => {
     const fetch = async() => {
       try {       
         const response_users = await axios.get('/api/v1/users/all')
         setUsers(response_users.data.data)
-
         
       } catch (error) {
         console.log(error);
@@ -21,6 +22,21 @@ const Base = ({ eventType }) => {
     fetch()
   }, [])
 
+  
+  const getP5Balance = async (id) => {
+    const response_bal = await axios.get(`/api/v1/p5/balance/${id}`)
+    console.log(100 - response_bal.data.data[0].givenPoints);
+    return (100 - response_bal.data.data[0].givenPoints)
+
+  }
+  
+  const getRewardBalance = async(id) => {
+    const response_bal = await axios.get(`/api/v1/p5/balance/${id}`)
+    console.log(response_bal.data.data[0].receivedPoints);
+    return (response_bal.data.data[0].receivedPoints)
+  }
+  
+  
   return (
     <>
       <div className="container">
@@ -43,12 +59,13 @@ const Base = ({ eventType }) => {
             </thead>
             {
               users.length > 0 && users.map((user, index) => (
-                <tbody key={index}>
+                <tbody key={user._id}>
+                  
                   <tr>
-                    <td>{index}</td>
+                    <td>{index + 1}</td>
                     <td>{user.fullName}</td>
-                    <td>{}</td>
-                    <td>{}</td>
+                    <td>{user.p5Balance}</td>
+                    <td>{user.rewardBalance}</td>
                     <td><Link to={`/${user._id}`}><button>Edit</button></Link></td>
                   </tr>
                 </tbody>

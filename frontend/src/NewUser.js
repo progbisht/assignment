@@ -8,7 +8,7 @@ const NewUser = ({ user }) => {
     const [fullName, setFullName] = useState('')
 
     useEffect(() => {
-        if(user.fullName !== undefined){
+        if(user && user?.fullName !== undefined){
             setFullName(user.fullName)
         }
     }, [user])

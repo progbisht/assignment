@@ -68,6 +68,14 @@ input[type="text"] {
   flex: 1; /* Let the input take remaining space */
 }
 
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font: 400;
+  flex: 1; /* Let the input take remaining space */
+}
+
 button {
   margin: 10px;
   padding: 10px 20px;
@@ -80,6 +88,12 @@ button {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:disabled,
+button.disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
 }
 
 h1 {
@@ -151,6 +165,26 @@ th {
 
 tr {
   border-bottom: 1px solid black;
+}
+
+
+.dropdown{
+  
+  background-color: white;
+  z-index: 1;
+  list-style: none;
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+}
+
+.instructions {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
 }
 
 

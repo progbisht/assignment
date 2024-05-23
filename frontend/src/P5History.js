@@ -52,7 +52,7 @@ const P5History = () => {
                     <td>{user.givenPoints.createdAt}</td>
                     <td>{user.givenPoints.points}</td>
                     <td>{user.receiverName}</td>
-                    <td><Link to={`/${user._id}`}><button>Edit</button></Link></td>
+                    <td><Link to={`/${user._id}`}><button>Delete</button></Link></td>
                   </tr>
                 </tbody>
               ))

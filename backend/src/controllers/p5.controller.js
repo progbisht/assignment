@@ -125,7 +125,7 @@ const getP5History = asyncHandler( async(req, res) => {
 
 const createRewardPoints = asyncHandler(async (req, res) => {
     const { id } = req.params
-
+    console.log(id);
     const { fullName, points} = req.body
 
     if(!id){

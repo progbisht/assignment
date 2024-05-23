@@ -2,7 +2,7 @@ import asyncHandler from "../utility/asyncHandler.js";
 import ApiError from "../utility/ApiError.js";
 import { User } from "../models/User.model.js"
 import ApiResponse from "../utility/ApiResponse.js";
-
+import axios from 'axios'
 
 
 const registerUser = asyncHandler( async(req, res) => {
@@ -60,11 +60,12 @@ const getCurrentUser = asyncHandler( async(req, res) => {
     )
 })
 
+
+
 const getAllUser = asyncHandler( async(req, res) => {
     
     const foundUsers = await User.find()
 
-    
     res.status(200)
     .json(
         new ApiResponse(200, foundUsers, "Current user fetched successfully.")
