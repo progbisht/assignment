@@ -12,7 +12,7 @@ const Users = () => {
     const fetch = async() => {
       try {       
         const response = await axios.get(`/api/v1/users/${id}`)
-        console.log(response.data);
+        
         setUser(response.data.data)
       } catch (error) {
         console.log(error);

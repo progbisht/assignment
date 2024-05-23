@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import axios from './api/axios'
 
 const RewardHistory = () => {
@@ -11,13 +11,13 @@ const RewardHistory = () => {
 
   useEffect(()=>{
     const fetch = async () => {
-      console.log(id);
+     
       try {
         const response_bal = await axios.get(`/api/v1/reward/balance/${id}`)
         setRewardBalance(response_bal.data.data[0].receivedPoints)
         
         const response_hist = await axios.get(`/api/v1/reward/history/${id}`)
-        console.log(response_hist.data.data);
+        
         setRewardHistory(response_hist.data.data)
       
       } catch (error) {

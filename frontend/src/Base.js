@@ -5,8 +5,7 @@ import axios from "./api/axios"
 const Base = ({ eventType }) => {
 
   const [ users, setUsers ] = useState([])
-
-
+  const [ allUsers, setAllUsers ] = useState([])
 
   useEffect(() => {
     const fetch = async() => {
@@ -23,18 +22,41 @@ const Base = ({ eventType }) => {
   }, [])
 
   
+
+  
   const getP5Balance = async (id) => {
     const response_bal = await axios.get(`/api/v1/p5/balance/${id}`)
-    console.log(100 - response_bal.data.data[0].givenPoints);
+    
     return (100 - response_bal.data.data[0].givenPoints)
 
   }
   
   const getRewardBalance = async(id) => {
     const response_bal = await axios.get(`/api/v1/p5/balance/${id}`)
-    console.log(response_bal.data.data[0].receivedPoints);
+    
     return (response_bal.data.data[0].receivedPoints)
   }
+
+
+  useEffect(() => {
+    users.map((user) => {
+      const fetch = async(user) => {
+        user.p5Balance = await getP5Balance(user._id)
+        user.rewardBalance = await getRewardBalance(user._id)
+        
+        return user
+      }
+      
+      return fetch(user)
+    })
+
+  }, [users])
+
+  useEffect(() => {
+    console.log(users);
+    setAllUsers(users)
+  },[users])
+  
   
   
   return (
@@ -58,9 +80,8 @@ const Base = ({ eventType }) => {
                 </tr>
             </thead>
             {
-              users.length > 0 && users.map((user, index) => (
+              allUsers.length > 0 && allUsers.map((user, index) => (
                 <tbody key={user._id}>
-                  
                   <tr>
                     <td>{index + 1}</td>
                     <td>{user.fullName}</td>

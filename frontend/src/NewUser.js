@@ -24,8 +24,9 @@ const NewUser = ({ user }) => {
         try{
             const response = await axios.post('/api/v1/users', JSON.stringify(data))
             setFullName('')
-            console.log(response);
-            navigate('/')
+            if(response.status === 201){
+                navigate('/')
+            }
         }
         catch(err){
             console.log(err);

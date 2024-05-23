@@ -11,11 +11,11 @@ import {
 const router = Router()
 
 
-router.route('/delete').get(deleteP5Points)
 
 router.route('/balance/:id').get(getP5Balance)
-router.route('/create/:id').post(createRewardPoints)
 router.route('/history/:id').get(getP5History)
+router.route('/create/:id').post(createRewardPoints)
+router.route('/delete/:id').delete(deleteP5Points)
 
 
 export default router

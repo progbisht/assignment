@@ -14,6 +14,10 @@ const NewReward = () => {
     const[pointsFocus, setPointsFocus] = useState(false)
     
     const[p5Balance, setp5Balance] = useState(100)
+
+
+    const [errMsg, setErrMsg] = useState('');
+
     
 
     const {id} = useParams()
@@ -28,8 +32,6 @@ const NewReward = () => {
 
                 const response_balance = await axios.get(`/api/v1/p5/balance/${id}`)
                 setp5Balance(100 - response_balance.data.data[0].givenPoints)
-
-                navigate('/')
 
             } catch (error) {
                 console.log(error);
@@ -47,10 +49,12 @@ const NewReward = () => {
         setFullName(selectedOption);
     };    
 
-    const handleSubmit = async() => {
+    const handleSubmit = async(e) => {
+        e.preventDefault()
 
-        if(!(fullName && points)){
-            console.log("Name and points are required")
+        if(!fullName || !points){
+            setErrMsg("Name and points are required")
+            return
         }
 
         const data = {
@@ -61,7 +65,9 @@ const NewReward = () => {
         try{
             const response = await axios.post(`/api/v1/p5/create/${id}`, JSON.stringify(data))
 
-            console.log(response);
+            if(response.status === 201){
+                navigate('/')
+            }
         }
         catch(err){
             console.log(err)
@@ -83,6 +89,7 @@ const NewReward = () => {
 
         </div>
         <div className='container'>
+            {errMsg}
         <form>
                 <input
                     ref={currRef}

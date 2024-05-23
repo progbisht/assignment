@@ -125,7 +125,7 @@ const getP5History = asyncHandler( async(req, res) => {
 
 const createRewardPoints = asyncHandler(async (req, res) => {
     const { id } = req.params
-    console.log(id);
+
     const { fullName, points} = req.body
 
     if(!id){
@@ -190,14 +190,74 @@ const createRewardPoints = asyncHandler(async (req, res) => {
 
     const completedTransaction = await Reward.findById(newTransaction._id)
 
-    res.status(200).json(
-        new ApiResponse(200, completedTransaction, 'User points debited successfully.')
+    res.status(201).json(
+        new ApiResponse(201, completedTransaction, 'User points debited successfully.')
     )
 })
 
 
 const deleteP5Points = asyncHandler( async (req, res) => {
+    const {id} = req.params
 
+    if(!id){
+        throw new ApiError(400, `No P5 balance for ${id} found.`)
+    }
+
+    
+    const balance = await User.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(id)
+            }
+        },
+        {
+            $lookup: {
+                from: "rewards",
+                localField: "_id",
+                foreignField: "givenBy",
+                as: "givenPoints"
+            }
+
+        },
+        {
+            $unwind: "$givenPoints"
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "givenPoints.givenTo",
+                foreignField: "_id",
+                as: "receiver"
+            }
+        },
+        {
+            $addFields: {
+                receiverName: { $arrayElemAt: ["$receiver.fullName", 0] },
+                
+            }
+        },
+        {
+            $project: {
+                fullName: 1,
+                givenPoints: 1,
+                receiverName: 1
+            }
+        }
+
+    ])
+
+    const transactionId = balance[balance.length - 1].givenPoints._id
+
+    const reversedTransaction = await Reward.findByIdAndDelete(transactionId, {
+        new: true
+    })
+
+
+
+    res.status(200)
+    .json(
+        new ApiResponse(200, balance , "User's P5 balance reversed successfully.")
+    )
 })
 
 

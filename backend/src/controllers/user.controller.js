@@ -44,8 +44,7 @@ const registerUser = asyncHandler( async(req, res) => {
 const getCurrentUser = asyncHandler( async(req, res) => {
     const { id } = req.params
 
-    console.log(typeof id);
-    
+        
     if(!id){
         throw new ApiError(400, `No user with ${id} exist`)
     }
@@ -89,7 +88,7 @@ const updateUserDetails = asyncHandler( async(req, res) => {
         {
             new: true
         }
-    ).select
+    )
 
     req.status(200)
     .json(

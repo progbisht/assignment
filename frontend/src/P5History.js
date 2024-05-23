@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from './api/axios'
 
 
@@ -11,6 +11,8 @@ const P5History = () => {
 
   const { id } = useParams()
 
+  const navigate = useNavigate()
+
   useEffect(()=>{
     const fetch = async () => {
       try {
@@ -19,6 +21,7 @@ const P5History = () => {
         
         const response_hist = await axios.get(`/api/v1/p5/history/${id}`)
         setp5History(response_hist.data.data)
+      
       } catch (error) {
         console.log(error)
       }
@@ -26,6 +29,19 @@ const P5History = () => {
 
     fetch()
   },[])
+
+
+  const handleReverse = async() => {
+    try{
+      const response = await axios.delete(`/api/v1/p5/delete/${id}`)
+      if(response.status === 200){
+        navigate('/')
+      }
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
 
   return (
     <div className='container'>
@@ -52,7 +68,7 @@ const P5History = () => {
                     <td>{user.givenPoints.createdAt}</td>
                     <td>{user.givenPoints.points}</td>
                     <td>{user.receiverName}</td>
-                    <td><Link to={`/${user._id}`}><button>Delete</button></Link></td>
+                    <td><button onClick={handleReverse}>Delete</button></td>
                   </tr>
                 </tbody>
               ))
